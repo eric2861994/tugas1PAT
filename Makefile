@@ -8,4 +8,4 @@ webserver: src/webserver.o
 	g++ src/webserver.o $(LIBS) -o $(TARGET_DIR)/webserver
 
 src/webserver.o: src/webserver.cpp
-	g++ $(FLAGS) -c src/webserver.cpp
+	g++ $(FLAGS) -c src/webserver.cpp -o src/webserver.o
