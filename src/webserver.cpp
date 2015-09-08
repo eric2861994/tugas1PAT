@@ -3,6 +3,10 @@
 #include <iostream>
 #include <memory>
 
+#include "property.h"
+
+const std::string CONFIG_FILE = "config.prop";
+
 /**
  * Event-based, single-threaded Web Server program using evhttp.h.
  * Modified version of http://kukuruku.co/hub/cpp/lightweight-http-server-in-less-than-40-lines-on-libevent-and-c-11
@@ -13,6 +17,11 @@ int main() {
 		std::cerr << "Failed to init libevent." << std::endl;
 		return -1;
 	}
+
+	Property config(CONFIG_FILE);
+	std::cout << config.get("port") << std::endl;
+	std::cout << config.get("pageDir") << std::endl;
+	return 0;
 
 	char const SrvAddress[] = "127.0.0.1";
 	std::uint16_t SrvPort = 5555;

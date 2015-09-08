@@ -6,7 +6,7 @@ Tugas 1 terdiri dari Benchmarking Web Server dan Pembuatan Web Server Sederhana.
 Jangan mengerjakan apa yang sedang dikerjakan orang lain, silahkan pilih salah satu perkejaan di bawah ini.
 - [x] program dapat menghandle HTTP request secara event-based
 - [x] menggunakan libevent
-- [ ] membuat modul untuk membaca file konfigurasi, sedang dikerjakan oleh Eric
+- [x] membuat modul untuk membaca file konfigurasi
 - [ ] bisa menerima request pada port tertentu (melalui konfigurasi file)
 - [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi)
 - [ ] request ke direktori tanpa nama file ambil index.html
