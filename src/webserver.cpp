@@ -3,7 +3,12 @@
 #include <iostream>
 #include <memory>
 
+/**
+ * Event-based, single-threaded Web Server program using evhttp.h.
+ * Modified version of http://kukuruku.co/hub/cpp/lightweight-http-server-in-less-than-40-lines-on-libevent-and-c-11
+ */
 int main() {
+	// libevent initialization
 	if ( !event_init() ) {
 		std::cerr << "Failed to init libevent." << std::endl;
 		return -1;
@@ -29,9 +34,10 @@ int main() {
 
 	evhttp_set_gencb(Server.get(), OnReq, nullptr);
 	if (event_dispatch() == -1) {
-		std::cerr << "Failed to run messahe loop." << std::endl;
+		std::cerr << "Failed to run message loop." << std::endl;
 		return -1;
 	}
+	std::cout << "if you see this, event dispatch is async" << std::endl;
 
 	return 0;
 }
