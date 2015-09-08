@@ -1,11 +1,12 @@
-#include <cstdint>
 #include <evhttp.h>
 #include <iostream>
 #include <memory>
 
 #include "property.h"
 
+
 const std::string CONFIG_FILE = "config.prop";
+
 
 /**
  * Event-based, single-threaded Web Server program using evhttp.h.
@@ -31,21 +32,27 @@ int main() {
 		return -1;
 	}
 
-	void (*OnReq)(evhttp_request *req, void *) = [] (evhttp_request *req, void *)
-	{
+	// setup handler function
+	void (*OnReq)(evhttp_request *req, void *) = [] (evhttp_request *req, void *) {
+		// get output buffer
+		// TODO do we need to dealocate?
 		auto *OutBuf = evhttp_request_get_output_buffer(req);
 		if (!OutBuf)
-		return;
+			return;
+
+		// determine
+		// TODO find out if it is blocking or not
 		evbuffer_add_printf(OutBuf, "<html><body><center><h1>Hello World!</h1></center></body></html>");
 		evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 	};
 
+	// dispatch server
+	// TODO what is the third parameter for?
 	evhttp_set_gencb(Server.get(), OnReq, nullptr);
 	if (event_dispatch() == -1) {
 		std::cerr << "Failed to run message loop." << std::endl;
 		return -1;
 	}
-	std::cout << "if you see this, event dispatch is async" << std::endl;
 
 	return 0;
 }

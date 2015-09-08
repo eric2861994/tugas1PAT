@@ -8,6 +8,8 @@ Jangan mengerjakan apa yang sedang dikerjakan orang lain, silahkan pilih salah s
 - [x] menggunakan libevent
 - [x] membuat modul untuk membaca file konfigurasi
 - [x] bisa menerima request pada port tertentu (melalui konfigurasi file)
-- [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi)
+- [ ] bisa mengembalikan halaman dari file
+- [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi, preload)
 - [ ] request ke direktori tanpa nama file ambil index.html
 - [ ] error jika resource tidak ditemukan
+- [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi, periodic reload)

@@ -20,3 +20,9 @@ utils: $(SOURCE_DIR)/utils.o
 
 $(SOURCE_DIR)/utils.o: $(SOURCE_DIR)/utils.h $(SOURCE_DIR)/utils.cpp
 	g++ $(FLAGS) -c $(SOURCE_DIR)/utils.cpp -o $(SOURCE_DIR)/utils.o
+
+echoserver: $(SOURCE_DIR)/echoserver.o
+	gcc $(SOURCE_DIR)/echoserver.o -levent -o bin/echoserver
+
+$(SOURCE_DIR)/echoserver.o: $(SOURCE_DIR)/echoserver.c
+	gcc -c $(SOURCE_DIR)/echoserver.c -o $(SOURCE_DIR)/echoserver.o
