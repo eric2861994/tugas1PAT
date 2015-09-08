@@ -7,7 +7,7 @@ Jangan mengerjakan apa yang sedang dikerjakan orang lain, silahkan pilih salah s
 - [x] program dapat menghandle HTTP request secara event-based
 - [x] menggunakan libevent
 - [x] membuat modul untuk membaca file konfigurasi
-- [ ] bisa menerima request pada port tertentu (melalui konfigurasi file)
+- [ ] bisa menerima request pada port tertentu (melalui konfigurasi file), dikerjakan oleh Eric
 - [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi)
 - [ ] request ke direktori tanpa nama file ambil index.html
 - [ ] error jika resource tidak ditemukan
