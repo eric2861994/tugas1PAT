@@ -3,13 +3,11 @@
 std::vector<std::size_t> findPositions(const std::string& text, const std::string& subString) {
 	std::vector<std::size_t> positions;
 
-	std::size_t found = -1;
-	do {
+	std::size_t found = text.find(subString);
+	while (found != std::string::npos) {
+		positions.push_back(found);
 		found = text.find(subString, found + 1);
-		if (found != std::string::npos) {
-			positions.push_back(found);
-		}
-	} while (found != std::string::npos);
+	}
 
 	return positions;
 }

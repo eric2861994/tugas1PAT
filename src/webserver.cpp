@@ -18,17 +18,16 @@ int main() {
 		return -1;
 	}
 
+	// load configuration file
 	Property config(CONFIG_FILE);
-	std::cout << config.get("port") << std::endl;
-	std::cout << config.get("pageDir") << std::endl;
-	return 0;
 
+	// setup server
 	char const SrvAddress[] = "127.0.0.1";
-	std::uint16_t SrvPort = 5555;
+	std::uint16_t SrvPort = std::stoi(config.get("port"));
 	std::unique_ptr<evhttp, decltype(&evhttp_free)> Server(evhttp_start(SrvAddress, SrvPort), &evhttp_free);
 
 	if (!Server) {
-		std::cerr << "Failed to init http server." << std::endl;
+		std::cerr << "Failed to setup http server." << std::endl;
 		return -1;
 	}
 
