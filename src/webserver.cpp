@@ -23,7 +23,7 @@ int main() {
 	Property config(CONFIG_FILE);
 
 	// setup server
-	char const SrvAddress[] = "127.0.0.1";
+	char const SrvAddress[] = "localhost";
 	std::uint16_t SrvPort = std::stoi(config.get("port"));
 	std::unique_ptr<evhttp, decltype(&evhttp_free)> Server(evhttp_start(SrvAddress, SrvPort), &evhttp_free);
 
@@ -39,10 +39,12 @@ int main() {
 		auto *OutBuf = evhttp_request_get_output_buffer(req);
 		if (!OutBuf)
 			return;
+		std::cout << evhttp_request_get_uri(req) << std::endl;
+		std::string out = "<html><body><center><h1>Hello World!</h1></center></body></html>";
 
 		// determine
 		// TODO find out if it is blocking or not
-		evbuffer_add_printf(OutBuf, "<html><body><center><h1>Hello World!</h1></center></body></html>");
+		evbuffer_add_printf(OutBuf, out.c_str());
 		evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 	};
 
