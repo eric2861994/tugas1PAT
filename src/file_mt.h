@@ -9,12 +9,23 @@
 class File_mt {
 public:
 	File_mt(const std::string& filename_);
+	~File_mt();
+
+	/**
+	 * Reload a file if it is modified. It will also load the file if it haven't
+	 * been loaded before.
+	 */
 	void reload();
+
+	/**
+	 * Return read only content as char buffer.
+	 */
+	const char* getContent();
 
 private:
 	const std::string filename;
 
-	std::string content;
+	const char* content;
 	time_t prevLoad;
 };
 

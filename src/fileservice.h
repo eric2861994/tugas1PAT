@@ -2,14 +2,14 @@
 #define FILE_SERVICE_MH
 
 #include <string>
-
+#include <map>
 
 
 class FileService {
 public:
 	FileService();
 	void start();
-	std::string get(const std::string& filename);
+	void get(const std::string& filename, const char* result, int& status);
 
 private:
 	void update(void*);
