@@ -1,8 +1,13 @@
 #ifndef PROPERTY_MH
 #define PROPERTY_MH
 
+#include "utils.h"
+
+#include <fstream>
 #include <map>
 #include <string>
+#include <vector>
+
 
 /**
  * Property file loader.

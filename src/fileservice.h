@@ -24,6 +24,7 @@ public:
 	 * @timeout time to timeout in seconds
 	 */
 	FileService(const std::string baseDir, const int timeout);
+	~FileService();
 
 	/**
 	 * Start File Service.
@@ -36,14 +37,16 @@ public:
 	void get(const std::string& filename, const char** result, int& status);
 
 	int getReloadTimeout();
-	void _reloadFiles();
 
 	static const int FILE_FOUND = 0, FILE_NOT_FOUND = 1;
 
+	friend void update(int, short int, void*);
+
 private:
 	std::vector<std::string> discoverFiles();
+	void reloadFiles();
 
-	std::map<std::string, File_mt*> files; // TODO destruct me
+	std::map<std::string, File_mt*> files; // TODO remove file?
 	const int reloadTimeout;
 	const std::string baseDirectory;
 };

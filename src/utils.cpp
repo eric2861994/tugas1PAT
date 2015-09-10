@@ -1,12 +1,13 @@
 #include "utils.h"
 
-std::vector<std::size_t> findPositions(const std::string& text, const std::string& subString) {
+
+std::vector<std::size_t> findPositions(const std::string& text, const std::string& substring) {
 	std::vector<std::size_t> positions;
 
-	std::size_t found = text.find(subString);
+	std::size_t found = text.find(substring);
 	while (found != std::string::npos) {
 		positions.push_back(found);
-		found = text.find(subString, found + 1);
+		found = text.find(substring, found + substring.length());
 	}
 
 	return positions;
@@ -35,6 +36,7 @@ std::vector<std::string> splitString(const std::string& text, const std::string&
 
 	return splits;
 }
+
 
 bool hasEnding(std::string const &fullString, std::string const &ending) {
 	if (fullString.length() >= ending.length()) {

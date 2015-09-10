@@ -1,8 +1,4 @@
 #include "property.h"
-#include "utils.h"
-
-#include <fstream>
-#include <vector>
 
 
 Property::Property(const std::string& filename) {
@@ -52,6 +48,8 @@ void Property::parseLine(const std::string& line, std::string& key, std::string&
 		error = 0;
 
 	} else {
+		key = "";
+		value = "";
 		error = 1;
 	}
 }
