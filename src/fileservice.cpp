@@ -16,7 +16,10 @@ void FileService::start() {
 
 
 void FileService::get(const std::string& serverPath, const char** result, int& status) {
-	const std::string filename = baseDirectory + serverPath;
+	std::string filename = baseDirectory + serverPath;
+	if (hasEnding(filename, "/")) {
+		filename += "index.html";
+	}
 
 	auto it = files.find(filename);
 	if (it != files.end()) {

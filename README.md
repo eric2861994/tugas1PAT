@@ -10,5 +10,5 @@ Jangan mengerjakan apa yang sedang dikerjakan orang lain, silahkan pilih salah s
 - [x] bisa menerima request pada port tertentu (melalui konfigurasi file)
 - [x] bisa mengembalikan halaman dari file
 - [x] menyediakan html dari lokasi direktori tertentu
-- [ ] request ke direktori tanpa nama file ambil index.html
+- [x] request ke direktori tanpa nama file ambil index.html
 - [x] error jika resource tidak ditemukan

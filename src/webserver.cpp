@@ -59,7 +59,7 @@ int main() {
 			evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 
 		} else {
-			evbuffer_add_printf(OutBuf, "File: <i>%s</i> not found", requestURI.c_str());
+			evbuffer_add_printf(OutBuf, "URI: <i>%s</i> not found", requestURI.c_str());
 			evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 		}
 	};
