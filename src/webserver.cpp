@@ -49,11 +49,12 @@ int main() {
 			filename += "index.html";
 		}
 
-		double fd = open(filename.c_str(), O_RDONLY);
+		int fd = open(filename.c_str(), O_RDONLY);
 		if (fd >= 0) {
 			struct stat st;
 			stat(filename.c_str(), &st);
 			evbuffer_add_file(OutBuf, fd, 0, st.st_size);
+			close(fd);
 			evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 
 		} else {
