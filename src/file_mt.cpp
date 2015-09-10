@@ -41,6 +41,9 @@ void File_mt::reload() {
 		f.close();
 
 		// TODO investigate whether this can cause problem in destruction of content
+		if (content != nullptr) {
+			delete[] content;
+		}
 		content = buffer;
 		prevLoad = buf.st_mtime;
 	}

@@ -9,7 +9,6 @@ Jangan mengerjakan apa yang sedang dikerjakan orang lain, silahkan pilih salah s
 - [x] membuat modul untuk membaca file konfigurasi
 - [x] bisa menerima request pada port tertentu (melalui konfigurasi file)
 - [ ] bisa mengembalikan halaman dari file, sedang dibuat oleh Eric
-- [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi, preload)
+- [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi, periodic reload)
 - [ ] request ke direktori tanpa nama file ambil index.html
 - [ ] error jika resource tidak ditemukan
-- [ ] menyediakan html dari lokasi direktori tertentu (konfigurasi, periodic reload)

@@ -1,11 +1,12 @@
+#include "fileservice.h"
+#include "property.h"
+
 #include <evhttp.h>
 #include <iostream>
 #include <memory>
 
-#include "property.h"
 
-
-const std::string CONFIG_FILE = "config.prop";
+const std::string CONFIG_FILE = "res/config.prop";
 
 
 /**
@@ -31,6 +32,10 @@ int main() {
 		std::cerr << "Failed to setup http server." << std::endl;
 		return -1;
 	}
+
+	// start services
+	FileService fileService("res/html", 5);
+	fileService.start();
 
 	// setup handler function
 	void (*OnReq)(evhttp_request *req, void *) = [] (evhttp_request *req, void *) {
