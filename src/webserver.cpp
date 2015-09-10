@@ -1,9 +1,10 @@
-#include "fileservice.h"
 #include "property.h"
 
 #include <evhttp.h>
+#include <fcntl.h>
 #include <iostream>
 #include <memory>
+#include <sys/stat.h>
 
 
 const std::string CONFIG_FILE = "res/config.prop";
@@ -33,39 +34,37 @@ int main() {
 	}
 	std::cout << "Server run on port: " << config.get("port") << std::endl;
 
-	// start services
-	FileService fileService(config.get("baseDir"), 5);
-	fileService.start();
-	std::cout << "FileService sarted on: " << config.get("baseDir") << std::endl;
-
 	// setup handler function
-	void (*OnReq)(evhttp_request *, void *) = [] (evhttp_request *req, void *fileService) {
+	void (*OnReq)(evhttp_request *, void *) = [] (evhttp_request *req, void *baseDir) {
+		std::string* baseDirectory = (std::string *)baseDir;
 		// get output buffer
 		evbuffer *OutBuf = evhttp_request_get_output_buffer(req);
 		if (!OutBuf)
 			return;
 
 		std::string requestURI = evhttp_request_get_uri(req);
-		std::cout << "Incoming request: " << requestURI << std::endl;
 
-		FileService* pFileService = (FileService*) fileService;
-		const char* data;
-		int status;
-		pFileService->get(requestURI, &data, status);
+		std::string filename = *baseDirectory + requestURI;
+		if (hasEnding(filename, "/")) {
+			filename += "index.html";
+		}
 
-		if (status == FileService::FILE_FOUND) {
-			// TODO this is text, so it can just be print
-			evbuffer_add_printf(OutBuf, "%s", data);
+		double fd = open(filename.c_str(), O_RDONLY);
+		if (fd >= 0) {
+			struct stat st;
+			stat(filename.c_str(), &st);
+			evbuffer_add_file(OutBuf, fd, 0, st.st_size);
 			evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 
 		} else {
 			evbuffer_add_printf(OutBuf, "URI: <i>%s</i> not found", requestURI.c_str());
-			evhttp_send_reply(req, HTTP_OK, "", OutBuf);
+			evhttp_send_reply(req, HTTP_NOTFOUND, "", OutBuf);
 		}
 	};
 
 	// dispatch server
-	evhttp_set_gencb(Server.get(), OnReq, &fileService);
+	std::string baseDir = config.get("baseDir");
+	evhttp_set_gencb(Server.get(), OnReq, &baseDir);
 	std::cout << "Ready to serve pages." << std::endl;
 	if (event_dispatch() == -1) {
 		std::cerr << "Failed to run message loop." << std::endl;
