@@ -54,7 +54,7 @@ int main() {
 			struct stat st;
 			stat(filename.c_str(), &st);
 			evbuffer_add_file(OutBuf, fd, 0, st.st_size);
-			close(fd);
+			// close(fd);
 			evhttp_send_reply(req, HTTP_OK, "", OutBuf);
 
 		} else {
