@@ -25,7 +25,7 @@ public:
 private:
 	const std::string filename;
 
-	const char* content;
+	const char* content; // TODO recheck me
 	time_t prevLoad;
 };
 

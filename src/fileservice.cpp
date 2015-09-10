@@ -1,9 +1,5 @@
 #include "fileservice.h"
 
-#include <dirent.h>
-#include <event.h>
-#include <iostream>
-
 
 void update(int, short int, void* fsInstance);
 
@@ -17,14 +13,16 @@ void FileService::start() {
 }
 
 
-void FileService::get(const std::string& filename, const char* result, int& status) {
+void FileService::get(const std::string& serverPath, const char** result, int& status) {
+	const std::string filename = baseDirectory + serverPath;
+
 	auto it = files.find(filename);
 	if (it != files.end()) {
-		result = it->second.getContent();
+		*result = it->second->getContent();
 		status = FILE_FOUND;
 
 	} else {
-		result = nullptr;
+		*result = nullptr;
 		status = FILE_NOT_FOUND;
 	}
 }
@@ -57,14 +55,23 @@ void printVector(std::vector<std::string> v) {
 }
 
 void FileService::_reloadFiles() {
-	std::vector<std::string> files = discoverFiles();
+	std::vector<std::string> dirFiles = discoverFiles();
 
-	std::cout << "reloading files:\n";
-	printVector(files);
-	// reload file for each files in filemap
-	// for (auto it = files.begin(); it != files.end(); ++it) {
-	// 	it->second.reload();
-	// }
+	for (auto it = dirFiles.begin(); it != dirFiles.end(); ++it) {
+		if (hasEnding(*it, ".html")) {
+			auto iterator = files.find(*it);
+			// if file already exist before, just reload it
+			if (iterator != files.end()) {
+				iterator->second->reload();
+
+			} else {
+				// add file to file service
+		 		File_mt* file = new File_mt(*it);
+		 		file->reload();
+		 		files.insert(std::pair<std::string, File_mt*>(*it, file));
+			}
+		}
+	}
 }
 
 int FileService::getReloadTimeout() {
@@ -73,13 +80,12 @@ int FileService::getReloadTimeout() {
 
 std::vector<std::string> FileService::discoverFiles() {
 	DIR *dir = opendir(baseDirectory.c_str());
-	dirent *ent;
 	if (dir != nullptr) {
 		std::vector<std::string> filenames;
 		// get all the files and directories within directory
 		dirent *ent = readdir(dir);
 		while (ent != nullptr) {
-			filenames.push_back(ent->d_name);
+			filenames.push_back(baseDirectory + "/" + ent->d_name);
 			ent = readdir(dir);
 		}
 		closedir(dir);

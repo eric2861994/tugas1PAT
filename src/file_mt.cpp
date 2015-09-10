@@ -1,7 +1,8 @@
 #include "file_mt.h"
 
-#include <sys/stat.h>
 #include <fstream>
+#include <iostream>
+#include <sys/stat.h>
 
 
 File_mt::File_mt(const std::string& filename_) :
@@ -42,8 +43,13 @@ void File_mt::reload() {
 
 		// TODO investigate whether this can cause problem in destruction of content
 		if (content != nullptr) {
+			std::cout << "Reloaded: " << filename << " (" << length << " bytes)";
 			delete[] content;
+
+		} else {
+			std::cout << "Loaded: " << filename << " (" << length << " bytes)";
 		}
+		std::cout << std::endl;
 		content = buffer;
 		prevLoad = buf.st_mtime;
 	}

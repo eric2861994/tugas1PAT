@@ -14,4 +14,6 @@ std::vector<std::size_t> findPositions(const std::string& text, const std::strin
  */
 std::vector<std::string> splitString(const std::string& text, const std::string& delimiter);
 
+bool hasEnding(std::string const &fullString, std::string const &ending);
+
 #endif
